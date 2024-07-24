@@ -1,13 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
+import WebViewLeafletMap from './WebViewLeafletMap';
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <div style={{ width: '100vw', height: '100vh' }}>
+      <WebViewLeafletMap />
+    </div>
   </React.StrictMode>
 );
 
