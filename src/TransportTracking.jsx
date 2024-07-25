@@ -14,23 +14,24 @@ const updateFunction = (prevState, nextState) => {
 };
 
 // example of transport object
-// const transport = { trip_id: '0', licence_plate: '123', egsid: '0', 'car_hanlder': '0' }
+// const transport = { id: '0', licence_plate: '123', egsid: '0', 'car_hanlder': '0' }
 
 function TransportTracking({
   transport = {
-    place: { x: 0, y: 0 }, icon: '',
-    trip_id: '',
+    x: 0,
+    y: 0,
+    icon: '',
+    id: '',
     egtsid: '',
     car_handler: '',
     license_plate: '',
-    test: true,
   },
   onClickMarker,
   currentZoom
 }) {
-  if (transport?.test) return null;
+  if (!(transport?.x && transport.y)) return null;
 
-  const { x: lat, y: lng } = transport.place;
+  const { x: lat, y: lng } = transport;
 
   return (
     <Marker
@@ -53,7 +54,7 @@ function TransportTracking({
       {/* eslint-disable-next-line no-underscore-dangle */}
       {currentZoom > 10 && (
         <Tooltip direction="top" offset={[16, 0]} opacity={0.8} permanent>
-          {transport?.trip_id || transport.license_plate || transport.egtsid || transport?.car_handler}
+          {transport?.id || transport.license_plate || transport.egtsid || transport?.car_handler}
         </Tooltip>
       )}
     </Marker>
