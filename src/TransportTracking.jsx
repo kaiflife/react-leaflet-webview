@@ -1,6 +1,7 @@
 import React, { memo } from 'react';
 import { Marker, Tooltip } from 'react-leaflet';
 import L from 'leaflet';
+import { createDivIcon } from './mapHelper';
 
 const updateFunction = (prevState, nextState) => {
   if (prevState.data?.coordinates?.x !== nextState.data?.coordinates?.x) {
@@ -12,14 +13,28 @@ const updateFunction = (prevState, nextState) => {
   return prevState.data?.coordinates?.y === nextState.data?.coordinates?.y;
 };
 
-function TransportTracking({ data = {}, onClickMarker, currentZoom }) {
-  if (!data?.place) return null;
+// example of transport object
+// const transport = { trip_id: '0', licence_plate: '123', egsid: '0', 'car_hanlder': '0' }
 
-  const { x: lat, y: lng } = data.place;
+function TransportTracking({
+  transport = {
+    place: { x: 0, y: 0 }, icon: '',
+    trip_id: '',
+    egtsid: '',
+    car_handler: '',
+    license_plate: '',
+    test: true,
+  },
+  onClickMarker,
+  currentZoom
+}) {
+  if (transport?.test) return null;
+
+  const { x: lat, y: lng } = transport.place;
 
   return (
     <Marker
-      icon={data.icon}
+      icon={createDivIcon(transport.icon)}
       position={L.latLng(lat, lng)}
       eventHandlers={{
         click: (e) => {
@@ -30,7 +45,7 @@ function TransportTracking({ data = {}, onClickMarker, currentZoom }) {
               ?.setView([e.latlng.lat, e.latlng.lng]),
             0,
           );
-          onClickMarker?.(data);
+          onClickMarker?.(transport);
           return e;
         },
       }}
@@ -38,7 +53,7 @@ function TransportTracking({ data = {}, onClickMarker, currentZoom }) {
       {/* eslint-disable-next-line no-underscore-dangle */}
       {currentZoom > 10 && (
         <Tooltip direction="top" offset={[16, 0]} opacity={0.8} permanent>
-          {data?.trip_id || data.license_plate || data.egtsid || data?.car_handler}
+          {transport?.trip_id || transport.license_plate || transport.egtsid || transport?.car_handler}
         </Tooltip>
       )}
     </Marker>
