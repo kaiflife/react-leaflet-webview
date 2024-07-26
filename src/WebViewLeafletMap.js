@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import {
   GeoJSON,
   MapContainer,
@@ -64,7 +64,7 @@ const WebViewLeafletMap = () => {
   const [polylines, setPolylines] = useState([])
   const [clickedMarkerId, setClickedMarkerId] = useState(null)
   const [geoJsons, setGeoJsons] = useState([])
-  const [hasLocation, setHasLocation] = useState(false)
+  const [myLocation, setMyLocation] = useState({ x: 0, y: 0 })
   const [mapData, setMapData] = useState({
     zoom: 13,
     center: CENTER_COORDINATES
@@ -79,7 +79,7 @@ const WebViewLeafletMap = () => {
     setGeoJsons,
     setTrackedTransports,
     setMapData,
-    setHasLocation
+    setMyLocation
   }
 
   const addEntity = name => {
@@ -90,10 +90,10 @@ const WebViewLeafletMap = () => {
       // DEBUG
       // webViewSendMessage({ webViewEntityData })
       // webViewSendMessage({ name })
-      webViewSendMessage({
-        setterByName:
-          setterByName[`set${name[0].toUpperCase()}${name.slice(1)}`]
-      })
+      // webViewSendMessage({
+      //   setterByName:
+      //     setterByName[`set${name[0].toUpperCase()}${name.slice(1)}`]
+      // })
 
       if (webViewEntityData) {
         webViewSendMessage({ webViewEntityData })
@@ -174,7 +174,7 @@ const WebViewLeafletMap = () => {
         {geoJsons.map(geoJsonData => (
           <GeoJSON data={geoJsonData} />
         ))}
-        <MapControls hasLocation={hasLocation} />
+        <MapControls myLocation={myLocation} />
         <DisableMarkerTooltip setSelectedMarker={setClickedMarkerId} />
         {trackedTransports?.map?.(transport => (
           <TransportTracking

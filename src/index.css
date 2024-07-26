@@ -20,4 +20,5 @@ p {
 
 .leaflet-div-icon {
   border: none !important;
+  background: none !important;
 }
