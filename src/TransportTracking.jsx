@@ -2,6 +2,7 @@ import React, { memo } from 'react';
 import { Marker, Tooltip } from 'react-leaflet';
 import L from 'leaflet';
 import { createDivIcon } from './mapHelper';
+import { webViewSendMessage } from './helpers';
 
 const updateFunction = (prevState, nextState) => {
   if (prevState.data?.coordinates?.x !== nextState.data?.coordinates?.x) {
@@ -16,6 +17,11 @@ const updateFunction = (prevState, nextState) => {
 // example of transport object
 // const transport = { id: '0', licence_plate: '123', egsid: '0', 'car_hanlder': '0' }
 
+
+const onClickTrackedMarker = trackedTransport => {
+  webViewSendMessage(trackedTransport)
+}
+
 function TransportTracking({
   transport = {
     x: 0,
@@ -26,7 +32,6 @@ function TransportTracking({
     car_handler: '',
     license_plate: '',
   },
-  onClickMarker,
   currentZoom
 }) {
   if (!(transport?.x && transport.y)) return null;
@@ -46,7 +51,10 @@ function TransportTracking({
               ?.setView([e.latlng.lat, e.latlng.lng]),
             0,
           );
-          onClickMarker?.(transport);
+          onClickTrackedMarker?.({
+            ...transport,
+            type: 'transport',
+          });
           return e;
         },
       }}

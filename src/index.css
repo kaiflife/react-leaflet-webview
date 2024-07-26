@@ -12,6 +12,11 @@ code {
     monospace;
 }
 
+p {
+  word-wrap: break-word;
+  white-space: break-spaces;
+  width: 100px;
+}
 
 .leaflet-div-icon {
   border: none !important;
