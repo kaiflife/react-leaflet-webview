@@ -69,7 +69,7 @@ const WebViewLeafletMap = () => {
     zoom: 13,
     center: CENTER_COORDINATES
   })
-  const [markers, setMarkers] = useState(testMarkers)
+  const [markers, setMarkers] = useState([])
   const [trackedTransports, setTrackedTransports] = useState([])
   const [currentZoom, setCurrentZoom] = useState(11)
 
@@ -118,6 +118,7 @@ const WebViewLeafletMap = () => {
   }
 
   const boundsToCoordinates = () => {
+    // example bounds = [[[53, 53], [52, 52]]]
     const bounds = getWebViewObject().bounds
 
     if (bounds?.length) {

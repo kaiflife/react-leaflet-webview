@@ -36,12 +36,12 @@ function TransportTracking({
 }) {
   if (!(transport?.x && transport.y)) return null;
 
-  const { x: lat, y: lng } = transport;
+  const { x, y } = transport;
 
   return (
     <Marker
       icon={createDivIcon(transport.icon)}
-      position={L.latLng(lat, lng)}
+      position={L.latLng(x, y)}
       eventHandlers={{
         click: (e) => {
           // eslint-disable-next-line no-underscore-dangle
@@ -61,8 +61,8 @@ function TransportTracking({
     >
       {/* eslint-disable-next-line no-underscore-dangle */}
       {currentZoom > 10 && (
-        <Tooltip direction="top" offset={[16, 0]} opacity={0.8} permanent>
-          {transport?.id || transport.license_plate || transport.egtsid || transport?.car_handler}
+        <Tooltip direction="top" offset={[10, 0]} opacity={0.8} permanent>
+          {transport.license_plate || transport.egtsid || transport?.car_handler}
         </Tooltip>
       )}
     </Marker>

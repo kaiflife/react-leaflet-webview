@@ -82,7 +82,7 @@ export default function MapControls ({ myLocation }) {
             display: 'flex',
             flexDirection: 'column',
             gap: '4px',
-            paddingRight: '4px'
+            paddingRight: '8px'
           }}
         >
           <button style={buttonStyle} onClick={getMyLocation}>
