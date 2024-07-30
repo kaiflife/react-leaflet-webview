@@ -10,8 +10,13 @@ const buttonStyle = {
   minWidth: '44px',
   background: '#00A8E2',
   borderRadius: '24px',
-  border: 'none'
-  // color: BUTTON_BLUE,
+  border: 'none',
+  fontSize: '24px',
+  fontWeight: 'bold',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  color: 'white',
   // svg: {
   //   fill: BUTTON_BLUE
   // }
@@ -58,10 +63,18 @@ export default function MapControls ({ myLocation }) {
     }
   }
 
+  const zoom = sign => () => {
+    if (sign === '+') map.zoomIn()
+    else map.zoomOut()
+  }
+
   return (
     <>
       {position.lat !== 0 && (
-        <Marker icon={createDivIcon(getIcon, { iconAnchor: [11, 0]})} position={position}>
+        <Marker
+          icon={createDivIcon(getIcon, { iconAnchor: [11, 0] })}
+          position={position}
+        >
           <Popup>Ваше местоположение</Popup>
         </Marker>
       )}
@@ -88,6 +101,14 @@ export default function MapControls ({ myLocation }) {
           <button style={buttonStyle} onClick={getMyLocation}>
             <MyLocationIcon />
           </button>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+            <button style={buttonStyle} onClick={zoom('+')}>
+              +
+            </button>
+            <button style={buttonStyle} onClick={zoom('-')}>
+              -
+            </button>
+          </div>
         </div>
       </div>
     </>
